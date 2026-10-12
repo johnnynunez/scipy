@@ -31,11 +31,11 @@ args = ['cmake', '-S', SOURCE, '-B', BUILD, '-G', 'Ninja',
         '-DCMAKE_C_COMPILER=clang-cl', '-DCMAKE_Fortran_COMPILER=flang-new',
         '-DBUILD_SHARED_LIBS=ON', '-DCMAKE_SYSTEM_PROCESSOR=arm64',
         '-DCMAKE_SYSTEM_NAME=Windows', '-DSYMBOLPREFIX=scipy_', '-DLIBNAMEPREFIX=scipy_',
-        '-DUSE_THREADS=1', '-DNUM_THREADS=24', '-DBUILD_SINGLE=OFF', '-DBUILD_DOUBLE=OFF',
-        '-DBUILD_COMPLEX=OFF', '-DBUILD_COMPLEX16=ON', '-DBUILD_TESTING=OFF',
+        '-DUSE_THREADS=1', '-DNUM_THREADS=24', '-DBUILD_SINGLE=ON', '-DBUILD_DOUBLE=ON',
+        '-DBUILD_COMPLEX=ON', '-DBUILD_COMPLEX16=ON', '-DBUILD_TESTING=OFF',
         '-DBUILD_WITHOUT_LAPACKE=ON', '-DCMAKE_EXPORT_COMPILE_COMMANDS=ON']
 (REPORT / 'build-profile.json').write_text(json.dumps({'source_commit': '9bdf051b96e956f848dfcef89c23e1993b0e1b3e',
-    'configure': [str(x) for x in args], 'scope': 'complex128-only LP64 source regression; not a rebuilt NumPy wheel'}, indent=2))
+    'configure': [str(x) for x in args], 'scope': 'all-precision LP64 library build, complex128 GESV regression; not a rebuilt NumPy wheel'}, indent=2))
 run(args, 'configure')
 run(['cmake', '--build', BUILD, '--parallel', '8'], 'build-red')
 source = SOURCE / 'interface/lapack/gesv.c'
