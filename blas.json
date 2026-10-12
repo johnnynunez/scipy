@@ -1,0 +1,6 @@
+{
+  "filename": "scipy_openblas32-0.3.34.237.0-py3-none-win_arm64.whl",
+  "url": "https://files.pythonhosted.org/packages/17/f9/4096debbb9ebecf98cc53011faf1424bd7c3d465b82653a3c8e579306f09/scipy_openblas32-0.3.34.237.0-py3-none-win_arm64.whl",
+  "digests": {"sha256": "804d78305a72a62e3ee99f6567c19f10ca519a698d949092f5f66663c78f4903"},
+  "requirement": "scipy-openblas32==0.3.34.237.0"
+}
