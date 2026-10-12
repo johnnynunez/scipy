@@ -1,0 +1,98 @@
+{
+  "scipy==1.16.3": {
+    "comment_text": null,
+    "core-metadata": {
+      "sha256": "3c3c96d16069fa4380860e4181a707fd70717a58566f81429f926a3478216310"
+    },
+    "digests": {
+      "blake2b_256": "ce69c5c7807fd007dad4f48e0a5f2153038dc96e8725d3345b9ee31b2b7bed46",
+      "md5": "f4424ab7db0069b50c11a37b0cbbbeb1",
+      "sha256": "a8a26c78ef223d3e30920ef759e25625a0ecdd0d60e5a8818b7513c3e5384cf2"
+    },
+    "downloads": -1,
+    "filename": "scipy-1.16.3-cp312-cp312-win_arm64.whl",
+    "has_sig": false,
+    "md5_digest": "f4424ab7db0069b50c11a37b0cbbbeb1",
+    "packagetype": "bdist_wheel",
+    "python_version": "cp312",
+    "requires_python": ">=3.11",
+    "size": 25463014,
+    "upload_time": "2025-10-28T17:33:25",
+    "upload_time_iso_8601": "2025-10-28T17:33:25.975636Z",
+    "url": "https://files.pythonhosted.org/packages/ce/69/c5c7807fd007dad4f48e0a5f2153038dc96e8725d3345b9ee31b2b7bed46/scipy-1.16.3-cp312-cp312-win_arm64.whl",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "scipy==1.17.0": {
+    "comment_text": null,
+    "core-metadata": {
+      "sha256": "8749b8cd8e6c4944025fb8ffb8baf0f657a6f1e2f2a21a46add28feda7717d82"
+    },
+    "digests": {
+      "blake2b_256": "9d2138165845392cae67b61843a52c6455d47d0cc2a40dd495c89f4362944654",
+      "md5": "1d86708baad828ebc0950c45c3eb0b4b",
+      "sha256": "f603d8a5518c7426414d1d8f82e253e454471de682ce5e39c29adb0df1efb86b"
+    },
+    "downloads": -1,
+    "filename": "scipy-1.17.0-cp312-cp312-win_arm64.whl",
+    "has_sig": false,
+    "md5_digest": "1d86708baad828ebc0950c45c3eb0b4b",
+    "packagetype": "bdist_wheel",
+    "python_version": "cp312",
+    "requires_python": ">=3.11",
+    "size": 24314368,
+    "upload_time": "2026-01-10T21:26:23",
+    "upload_time_iso_8601": "2026-01-10T21:26:23.087394Z",
+    "url": "https://files.pythonhosted.org/packages/9d/21/38165845392cae67b61843a52c6455d47d0cc2a40dd495c89f4362944654/scipy-1.17.0-cp312-cp312-win_arm64.whl",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "scipy==1.18.1": {
+    "comment_text": null,
+    "core-metadata": {
+      "sha256": "c8313d18ca0168ff291fe0a3b50532f3a18b14547695e9aa7ca1c1ce6eca92dc"
+    },
+    "digests": {
+      "blake2b_256": "c70be1525354ff9d7d5feb6d1b31af6d14072e5c91e9607b421fa1ec889660b3",
+      "md5": "e55b82b62c13222da46a1bb9fe8f2234",
+      "sha256": "d65d448389b8436493abcf629cc94ad0cf32aecaf06e1acca1de53cc795f2f12"
+    },
+    "downloads": -1,
+    "filename": "scipy-1.18.1-cp312-cp312-win_arm64.whl",
+    "has_sig": false,
+    "md5_digest": "e55b82b62c13222da46a1bb9fe8f2234",
+    "packagetype": "bdist_wheel",
+    "python_version": "cp312",
+    "requires_python": ">=3.12",
+    "size": 24400588,
+    "upload_time": "2026-08-21T23:24:30",
+    "upload_time_iso_8601": "2026-08-21T23:24:30.579078Z",
+    "url": "https://files.pythonhosted.org/packages/c7/0b/e1525354ff9d7d5feb6d1b31af6d14072e5c91e9607b421fa1ec889660b3/scipy-1.18.1-cp312-cp312-win_arm64.whl",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "numpy==2.5.1": {
+    "comment_text": null,
+    "core-metadata": {
+      "sha256": "6ae45122ee97050e48849438320430d05f01814f72e66e69cbeed027d2c6a1e8"
+    },
+    "digests": {
+      "blake2b_256": "2b2ad1a88066b1c14186f5d3c0d18c94f17b064511982bab0578d49ee9d43c29",
+      "md5": "0dcd97436db82b39b585823cbbd00ac6",
+      "sha256": "17a25e09640602e10bc8de0e6fa2b3fd68eedd84ba6d7842dc8f32f9ab87bd0b"
+    },
+    "downloads": -1,
+    "filename": "numpy-2.5.1-cp312-cp312-win_arm64.whl",
+    "has_sig": false,
+    "md5_digest": "0dcd97436db82b39b585823cbbd00ac6",
+    "packagetype": "bdist_wheel",
+    "python_version": "cp312",
+    "requires_python": ">=3.12",
+    "size": 10350488,
+    "upload_time": "2026-07-04T17:06:37",
+    "upload_time_iso_8601": "2026-07-04T17:06:37.785775Z",
+    "url": "https://files.pythonhosted.org/packages/2b/2a/d1a88066b1c14186f5d3c0d18c94f17b064511982bab0578d49ee9d43c29/numpy-2.5.1-cp312-cp312-win_arm64.whl",
+    "yanked": false,
+    "yanked_reason": null
+  }
+}

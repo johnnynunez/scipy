@@ -1,0 +1,53 @@
+name: Native scientific official-wheel references
+on:
+  push:
+    branches: [ci/scientific-native-pins-20261012]
+permissions:
+  contents: read
+jobs:
+  official:
+    runs-on: windows-11-arm
+    timeout-minutes: 65
+    strategy:
+      fail-fast: false
+      matrix:
+        scipy: ['1.16.3', '1.17.0', '1.18.1']
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+          architecture: arm64
+      - name: Isolated test environment
+        shell: pwsh
+        run: |
+          $work = "$env:RUNNER_TEMP/scientific-reference"
+          New-Item -ItemType Directory -Force $work | Out-Null
+          "PIP_CACHE_DIR=$work/pip-cache" >> $env:GITHUB_ENV
+          "EVIDENCE=$work/evidence" >> $env:GITHUB_ENV
+          python -m venv "$work/venv"
+          "$work/venv/Scripts" >> $env:GITHUB_PATH
+      - name: Install pinned test tools
+        shell: pwsh
+        run: |
+          python -m pip install pytest==8.4.2 pytest-timeout==2.4.0 pytest-xdist==3.8.0 hypothesis==6.169.0 pefile==2024.8.26 array-api-strict==2.6.1 mpmath==1.4.1 threadpoolctl==3.7.0 pooch==1.9.0 Cython==3.3.0 meson==1.12.1 ninja==1.13.2
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python -m unittest -v test_integrity
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Exact official wheels and unchanged target suites
+        shell: pwsh
+        run: |
+          python run_reference.py --version '${{ matrix.scipy }}' --out "$env:EVIDENCE"
+          exit $LASTEXITCODE
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: scientific-reference-${{ matrix.scipy }}-cp312-arm64
+          path: ${{ env.EVIDENCE }}
+          if-no-files-found: error
+          retention-days: 14
