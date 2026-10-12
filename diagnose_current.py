@@ -59,8 +59,10 @@ for package in ["numpy.libs","scipy.libs"]:
 print(json.dumps(report,indent=2))
 assert report and all(x["control"].get("set_1_2")==[1,2] for x in report)
 ''')]:
- r=subprocess.run([py,'-c',code],capture_output=True,text=True,timeout=120,cwd=work)
- (out/(name+'.log')).write_text(r.stdout+r.stderr)
- results.append({'name':name,'source':code,'returncode':r.returncode,'stdout':r.stdout,'stderr':r.stderr})
+ for threads in (1, 2, 4):
+  env=dict(os.environ,OPENBLAS_NUM_THREADS=str(threads),OMP_NUM_THREADS=str(threads))
+  r=subprocess.run([py,'-c',code],capture_output=True,text=True,timeout=120,cwd=work,env=env)
+  (out/(name+'-threads'+str(threads)+'.log')).write_text(r.stdout+r.stderr)
+  results.append({'name':name,'threads_env':threads,'source':code,'returncode':r.returncode,'stdout':r.stdout,'stderr':r.stderr})
 (out/'current-diagnostic.json').write_text(json.dumps(results,indent=2)); print(json.dumps(results,indent=2))
 # Diagnostic collector only; no replacement of original failing target suites.
