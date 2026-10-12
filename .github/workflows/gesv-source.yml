@@ -41,10 +41,18 @@ jobs:
           Invoke-WebRequest https://github.com/ninja-build/ninja/releases/download/v1.13.1/ninja-winarm64.zip -OutFile "$work/ninja.zip"
           Expand-Archive "$work/ninja.zip" "$work/ninja"
           "GESV_TOOLS=$work/cmake/cmake-3.29.4-windows-arm64/bin;$work/ninja;C:/Program Files/LLVM/bin" >> $env:GITHUB_ENV
+          $vswhere = "${env:ProgramFiles(x86)}/Microsoft Visual Studio/Installer/vswhere.exe"
+          $vs = & $vswhere -latest -products '*' -property installationPath
+          if ($LASTEXITCODE -ne 0 -or -not $vs) { throw 'Visual Studio discovery failed' }
+          $vcvars = "$vs/VC/Auxiliary/Build/vcvarsarm64.bat"
+          if (-not (Test-Path $vcvars)) { throw "ARM64 environment unavailable: $vcvars" }
+          "VCVARS=$vcvars" >> $env:GITHUB_ENV
+          $vcvars | Out-File "$work/reports/vcvars-path.txt"
       - name: Native unchanged and corrected-source regression
         shell: cmd
         run: |
-          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsarm64.bat"
+          call "%VCVARS%"
+          if errorlevel 1 exit /b 1
           set "PATH=%GESV_TOOLS%;%PATH%"
           "%TEST_PYTHON%" build_gesv_regression.py
           exit /b %ERRORLEVEL%
