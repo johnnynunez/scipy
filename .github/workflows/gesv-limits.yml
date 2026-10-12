@@ -1,0 +1,44 @@
+name: Bounded GESV numerical thread limits
+on:
+  push:
+    branches: [ci/gesv-limits-20261012]
+permissions:
+  contents: read
+jobs:
+  gesv:
+    runs-on: windows-11-arm
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+          architecture: arm64
+      - name: Install exact public reference wheels in a fresh venv
+        shell: pwsh
+        run: |
+          $work = "$env:RUNNER_TEMP/gesv-limits"
+          New-Item -ItemType Directory -Force "$work/reports" | Out-Null
+          "EVIDENCE=$work/reports" >> $env:GITHUB_ENV
+          "TEST_PYTHON=$work/venv/Scripts/python.exe" >> $env:GITHUB_ENV
+          $env:PIP_CACHE_DIR = "$work/pip-cache"
+          python -m venv "$work/venv"
+          & "$work/venv/Scripts/python.exe" -m pip install --only-binary=:all: numpy==2.5.1 scipy==1.16.3
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          & "$work/venv/Scripts/python.exe" -m pip freeze | Out-File "$work/reports/pip-freeze.txt"
+      - name: Preserve every numerical result and failure
+        shell: pwsh
+        run: |
+          & $env:TEST_PYTHON gesv_limits.py
+          exit $LASTEXITCODE
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: gesv-limits-reports
+          path: |
+            ${{ env.EVIDENCE }}/*.json
+            ${{ env.EVIDENCE }}/*.txt
+          if-no-files-found: error
+          retention-days: 14
