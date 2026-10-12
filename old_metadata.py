@@ -28,10 +28,19 @@ for package,version in [('scipy','1.11.2'),('numpy','1.22.2'),('numpy','1.23.5')
         code=124; text=(e.stdout or b'').decode(errors='replace')+'\nTIMEOUT\n'
     (out/(label+'.log')).write_text(text)
     results.append({'package':package,'version':version,'sdist':f,'requires_python':meta['info']['requires_python'],'command':cmd,'returncode':code,'metadata_prepared':code==0,'missing_numpy_1260b1':'No matching distribution found for numpy==1.26.0b1' in text,'impimporter_removed':'ImpImporter' in text,'timeout':code==124})
+    if package == 'numpy':
+        # Expose the exception pip wraps as BackendUnavailable. Preserve the
+        # exact legacy backend pin, without attempting a modern substitution.
+        subprocess.run([py,'-m','pip','install','setuptools==59.2.0'],check=True)
+        cause=subprocess.run([py,'-c','import setuptools.build_meta'],capture_output=True,text=True)
+        (out/(label+'-backend-import.log')).write_text(cause.stdout+cause.stderr)
+        results[-1]['backend_import_returncode']=cause.returncode
+        results[-1]['backend_import_traceback']=cause.stderr
+        results[-1]['backend_unavailable']="Cannot import 'setuptools.build_meta'" in text
     (out/'metadata-results.json').write_text(json.dumps(results,indent=2))
     print(label,code,text[-2500:],flush=True)
 # Success here means the audit ran, NOT that any wheel built or installed.
 assert len(results)==3
 assert all(x['returncode'] not in (0,124) for x in results), 'Unexpected success/timeout: inspect logs rather than infer a blocker'
 assert results[0]['missing_numpy_1260b1'], 'SciPy failure not attributed to expected exact build pin'
-assert all(x['impimporter_removed'] for x in results[1:]), 'Legacy NumPy failure not attributed to expected Python 3.12 backend'
+assert all(x['backend_unavailable'] and x['backend_import_returncode'] != 0 for x in results[1:]), 'Legacy NumPy failure not attributed to exact backend import; inspect traceback'

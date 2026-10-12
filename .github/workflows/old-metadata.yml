@@ -26,6 +26,12 @@ jobs:
           "EVIDENCE=$env:EVIDENCE" >> $env:GITHUB_ENV
           python old_metadata.py
           exit $LASTEXITCODE
+      - name: Separate reference crash and native thread control
+        if: always()
+        shell: pwsh
+        run: |
+          python diagnose_current.py
+          exit $LASTEXITCODE
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
